@@ -91,8 +91,6 @@ EduStream LMS is a modern, full-stack Learning Management System built using the
 
 | Role | Email | Password |
 
-|---|---|---|
-
 | **Administrator** | `admin@lms.com` | `adminpassword123` |
 
 *(Note: The Admin Login page also includes a **"1-Click Fill"** button for quick test evaluation)*
@@ -193,8 +191,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Method | Endpoint | Access | Description |
 
-|---|---|---|---|
-
 | `GET` | `/api/health` | Public | System status and database mode check |
 
 | `POST` | `/api/auth/login` | Public | Admin login (returns JWT token) |
@@ -256,28 +252,18 @@ curl -X POST http://localhost:5000/api/auth/create-admin \
 **Response (`201 Created`):**
 
 ```json
-
 {
-
-  "success": true,
-
-  "message": "New admin account created successfully",
-
-  "data": {
-
-    "_id": "0f41a8e5c7478d69313bbf08",
-
-    "name": "Co-Instructor",
-
-    "email": "instructor@lms.com",
-
-    "role": "admin",
-
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-
-  }
-
+  "success": true,
+  "message": "New admin account created successfully",
+  "data": {
+    "_id": "0f41a8e5c7478d69313bbf08",
+    "name": "Co-Instructor",
+    "email": "instructor@lms.com",
+    "role": "admin",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
 }
+```
 
 ```
 
