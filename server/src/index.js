@@ -1,4 +1,8 @@
 require('dotenv').config();
+const path = require('path');
+// Ensure environment variables are loaded
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
+
 const express = require('express');
 const cors = require('cors');
 const { connectDB, getDBStatus } = require('./config/db');
@@ -113,6 +117,28 @@ const bootstrapInitialData = async () => {
   }
 };
 
+// Database connection promise handler for serverless environments
+let dbInitPromise = null;
+const ensureDB = async () => {
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      await connectDB();
+      await bootstrapInitialData();
+    })();
+  }
+  return dbInitPromise;
+};
+
+// Middleware to ensure DB connection across requests
+app.use(async (req, res, next) => {
+  try {
+    await ensureDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   const status = getDBStatus();
@@ -134,10 +160,9 @@ app.use('/api/lectures', lectureRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// Connect DB and Start Server
+// Connect DB and Start Server (for standalone / local node runtime)
 const startServer = async () => {
-  await connectDB();
-  await bootstrapInitialData();
+  await ensureDB();
 
   app.listen(PORT, () => {
     const dbStatus = getDBStatus();
@@ -151,6 +176,9 @@ const startServer = async () => {
   });
 };
 
-startServer();
+// If not running inside Vercel serverless environment, start HTTP server
+if (!process.env.VERCEL) {
+  startServer();
+}
 
 module.exports = app;

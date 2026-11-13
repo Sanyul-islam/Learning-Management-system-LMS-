@@ -17,6 +17,15 @@
       "role": "admin",
       "createdAt": "2026-11-13T14:06:17.619Z",
       "updatedAt": "2026-11-13T14:06:17.620Z"
+    },
+    {
+      "_id": "cecef8027e230d627e52ab4a",
+      "name": "Super Admin",
+      "email": "superadmin@lms.com",
+      "password": "$2a$10$7liMWKdbP9vHh0XGHZAfheQwcXHEV9XGw2yRa7XLKIcGDfSKpPhqq",
+      "role": "admin",
+      "createdAt": "2026-11-13T14:20:54.916Z",
+      "updatedAt": "2026-11-13T14:20:54.916Z"
     }
   ],
   "courses": [
