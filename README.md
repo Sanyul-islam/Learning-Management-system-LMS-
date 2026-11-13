@@ -1,6 +1,6 @@
 # EduStream LMS - Full-Stack Learning Management System
 
-EduStream LMS is a full-stack Learning Management System built using the **MERN** stack (**MongoDB, Express.js, React / Next.js with TypeScript, and Node.js**) styled with **Tailwind CSS**. It provides a role-based architecture featuring an **Admin Dashboard** for complete Course & Lecture management and an interactive **Student Panel** with responsive video streaming.
+EduStream LMS is a modern, full-stack Learning Management System built using the **MERN** stack (**MongoDB, Express.js, React / Next.js with TypeScript, and Node.js**) styled with **Tailwind CSS**. It provides a role-based architecture featuring an **Admin Dashboard** for complete Course & Lecture management and an interactive **Student Panel** with responsive video streaming.
 
 ---
 
@@ -8,29 +8,29 @@ EduStream LMS is a full-stack Learning Management System built using the **MERN*
 
 ### 1. Student Panel
 - **Course Catalog (`/`)**:
-  - Live database-backed course feed with real-time keyword search and category tags.
-  - Displays thumbnail, course title, description, price (or Free badge), and lecture count.
-  - Responsive cards with animated skeleton loading states, empty search fallbacks, and error boundaries.
+  - Live database-backed course feed with real-time keyword search and category topic pills (*Web Development, Next.js, Python, Design*).
+  - Displays course thumbnail, title, description, price (or Free badge), and lecture count.
+  - Complete with loading skeleton state, empty search fallbacks, and error boundaries with retry buttons.
 - **Course Details & Interactive Lecture Player (`/courses/[id]`)**:
-  - Embedded video player supporting YouTube embeds, Vimeo, and HTML5 video (`.mp4`).
-  - Interactive lesson syllabus playlist with active playing indicator.
+  - Embedded video player supporting YouTube embeds (`watch?v=` & `youtu.be/` automatically converted to responsive embeds), Vimeo, and direct HTML5 `.mp4` video playback.
+  - Structured syllabus playlist with active lesson indicators.
   - Previous / Next lesson navigation controls and course summary details.
 
 ### 2. Admin Dashboard
 - **Authentication & Security (`/admin/login`)**:
   - Secure JWT authentication with bcrypt password hashing.
-  - Pre-filled 1-Click test credentials button for instant evaluation.
+  - Pre-filled **"1-Click Fill"** test credentials button for immediate evaluation.
   - Protected admin routes with token verification middleware.
 - **Course Management (`/admin`)**:
-  - High-level metric statistics (Total Courses, Total Lectures, Admin Session).
+  - System overview metrics (*Total Courses, Total Lectures, Admin Session*).
   - Search and filter existing courses.
-  - **Create Course Modal**: Title, description, price, thumbnail URL with real-time preview.
-  - **Edit Course Modal**: Modify existing course information.
-  - **Delete Course**: Cascading deletion that removes both the course and all associated lectures.
+  - **Create Course Modal**: Title, description, price, and thumbnail URL with real-time preview.
+  - **Edit Course Modal**: Modify existing courses.
+  - **Delete Course**: Cascading deletion that removes both the course and all its associated lectures.
 - **Lecture Management (`/admin/courses/[id]/lectures`)**:
   - Add lectures with title, description, video URL, and order index.
   - Display lectures associated with the specific course.
-  - Embedded video test preview modal directly inside the dashboard.
+  - Built-in **"Test Video Player" modal** to verify embedded video playback.
   - Edit and delete existing lectures.
 
 ---
@@ -39,14 +39,15 @@ EduStream LMS is a full-stack Learning Management System built using the **MERN*
 
 - **Frontend**: Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS + Lucide Icons.
 - **Backend**: Node.js + Express.js following a clean **MVC** (Model-View-Controller) structure:
-  - `server/src/models/`: Admin, Course, Lecture schemas.
+  - `server/src/models/`: Admin, Course, Lecture Mongoose schemas.
   - `server/src/controllers/`: `authController`, `courseController`, `lectureController`.
   - `server/src/routes/`: Modular REST API route handlers.
-  - `server/src/middleware/`: JWT verification and global error handlers.
+  - `server/src/middleware/`: JWT verification (`authMiddleware`) and global error handlers (`errorMiddleware`).
   - `server/src/services/dataService.js`: Unified data layer supporting MongoDB / Mongoose with instant local persistent storage fallback.
 - **Database**:
   - **MongoDB** with Mongoose when `MONGODB_URI` is provided (e.g. MongoDB Atlas or local MongoDB).
-  - **Automatic Persistent Store Fallback**: If MongoDB is not running locally, the server seamlessly operates in zero-config persistent mode (`server/data/db.json`), allowing instant evaluation without external database setup.
+  - **Auto-Sanitizer for Special Characters**: Automatically URL-encodes special characters in passwords (such as `@` converted to `%40`) to prevent MongoDB SRV parsing errors.
+  - **Automatic Persistent Store Fallback**: If MongoDB is not running, the server seamlessly operates in zero-config persistent mode (`server/data/db.json`), ensuring the application starts immediately without external dependencies.
 
 ---
 
@@ -56,7 +57,7 @@ EduStream LMS is a full-stack Learning Management System built using the **MERN*
 |---|---|---|
 | **Administrator** | `admin@lms.com` | `adminpassword123` |
 
-*(Note: The Admin Login page also includes a "1-Click Fill" button to test instantly)*
+*(Note: The Admin Login page also includes a **"1-Click Fill"** button for quick test evaluation)*
 
 ---
 
@@ -86,14 +87,15 @@ The backend environment file is configured at `server/.env`:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://127.0.0.1:27017/lms_db
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.abcde.mongodb.net/Learning_management_system?retryWrites=true&w=majority
 JWT_SECRET=lms_super_secret_jwt_key_2026_eval
 ADMIN_EMAIL=admin@lms.com
 ADMIN_PASSWORD=adminpassword123
 CLIENT_URL=http://localhost:3000
 ```
 
-*(If you have MongoDB Atlas, set `MONGODB_URI` to your Atlas connection string. If MongoDB is not running, the application starts with zero setup).*
+> **Note on MongoDB Atlas URI:**
+> If your password contains special characters (like `@`), our connection handler automatically URL-encodes them (`%40`) before connecting. If you don't have MongoDB installed locally, the server automatically starts in zero-setup persistent storage mode (`server/data/db.json`).
 
 ### 3. Database Seeding
 
@@ -129,7 +131,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 |---|---|---|---|
 | `GET` | `/api/health` | Public | System status and database mode check |
 | `POST` | `/api/auth/login` | Public | Admin login (returns JWT token) |
-| `POST` | `/api/auth/create-admin` | Public / Script | **Create a new admin account (Backend API only)** |
+| `POST` | `/api/auth/create-admin` | Backend API | **Create a new admin account (Backend only)** |
+| `POST` | `/api/auth/register-admin` | Backend API | Alias for creating a new admin account |
 | `GET` | `/api/auth/me` | Admin | Get authenticated admin profile |
 | `GET` | `/api/auth/admins` | Admin | Get list of all registered admins |
 | `GET` | `/api/courses` | Public | List all courses (supports `?search=...`) |
@@ -143,9 +146,13 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `PUT` | `/api/lectures/:id` | Admin | Update a lecture |
 | `DELETE` | `/api/lectures/:id` | Admin | Delete a lecture |
 
-### 🔒 Creating a New Admin via API
+---
 
-To register an admin without frontend exposure, send a `POST` request to `/api/auth/create-admin`:
+### 🔒 Creating a New Admin via API (Backend-Only)
+
+As per system specifications, the route to register new administrators is accessible strictly via backend API calls and is **not exposed or linked on the frontend UI**.
+
+To create a new admin, send a `POST` request to `/api/auth/create-admin`:
 
 ```bash
 curl -X POST http://localhost:5000/api/auth/create-admin \
@@ -156,5 +163,41 @@ curl -X POST http://localhost:5000/api/auth/create-admin \
     "password": "instructorpassword123"
   }'
 ```
-| `PUT` | `/api/lectures/:id` | Admin | Update a lecture |
-| `DELETE` | `/api/lectures/:id` | Admin | Delete a lecture |
+
+**Response (`201 Created`):**
+```json
+{
+  "success": true,
+  "message": "New admin account created successfully",
+  "data": {
+    "_id": "0f41a8e5c7478d69313bbf08",
+    "name": "Co-Instructor",
+    "email": "instructor@lms.com",
+    "role": "admin",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+```
+
+---
+
+## ☁️ Deployment on Vercel
+
+The project includes pre-configured `vercel.json` files for both frontend and backend deployments:
+
+### 1. Frontend Deployment (Root [`vercel.json`](./vercel.json))
+- **Root Directory**: `.` (Root)
+- **Framework**: Next.js
+- **Build Command**: `npm run build`
+- **Environment Variables**:
+  - `NEXT_PUBLIC_API_URL`: Your deployed backend URL (e.g. `https://your-api.vercel.app/api` or `https://your-api.onrender.com/api`).
+  - `BACKEND_URL`: (Optional) Next.js reverse-proxy destination if you wish to proxy `/api/*` through Next.js.
+
+### 2. Backend Deployment ([`server/vercel.json`](./server/vercel.json))
+- **Root Directory**: `server`
+- **Builds**: `@vercel/node` targeting `src/index.js`
+- **Environment Variables**:
+  - `MONGODB_URI`: Your MongoDB Atlas connection string.
+  - `JWT_SECRET`: Secret key for JWT token signing.
+  - `CLIENT_URL`: Your deployed frontend URL (e.g. `https://your-lms.vercel.app`).
+- The Express app is serverless-ready and automatically skips port binding when `process.env.VERCEL` is detected.
