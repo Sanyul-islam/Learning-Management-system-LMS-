@@ -1,0 +1,173 @@
+{
+  "admins": [
+    {
+      "_id": "6c56213478d6ede4dd0dd898",
+      "name": "System Administrator",
+      "email": "admin@lms.com",
+      "password": "$2a$10$n9rej7FGDUy0goQnm55wTOFjTobtOQlq63Mfjg8khAY3FUcu4xsE.",
+      "role": "admin",
+      "createdAt": "2026-11-13T11:01:16.953Z",
+      "updatedAt": "2026-11-13T11:01:16.953Z"
+    }
+  ],
+  "courses": [
+    {
+      "_id": "8f5bb8b2df4516bcd046b46d",
+      "title": "Modern Full-Stack Web Development (MERN)",
+      "description": "Master MongoDB, Express.js, React, and Node.js from the ground up. Build production-ready, full-stack web applications with modern patterns, clean architecture, REST APIs, and state management.",
+      "price": 49.99,
+      "thumbnail": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-13T11:01:16.957Z",
+      "updatedAt": "2026-11-13T11:01:16.957Z"
+    },
+    {
+      "_id": "dd82007d1091c61c7bad9542",
+      "title": "Next.js 16 & React 19 Mastery",
+      "description": "Learn the Next.js App Router, React Server Components, Server Actions, Turbopack, and Tailwind CSS. The ultimate modern course for building blazing fast web apps.",
+      "price": 69.99,
+      "thumbnail": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-13T11:01:16.967Z",
+      "updatedAt": "2026-11-13T11:01:16.967Z"
+    },
+    {
+      "_id": "687f04a12196cc60c3cbff28",
+      "title": "Python for Artificial Intelligence & Data Science",
+      "description": "Comprehensive introduction to Python programming, NumPy, Pandas, Data Visualization, and foundational Machine Learning models for modern developers.",
+      "price": 39.99,
+      "thumbnail": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-13T11:01:16.977Z",
+      "updatedAt": "2026-11-13T11:01:16.977Z"
+    },
+    {
+      "_id": "b1c49c5e5ce55a8218afe293",
+      "title": "UI/UX Design Systems with Figma",
+      "description": "Design responsive web and mobile interfaces, master auto-layout, build reusable Figma design systems, and export production assets for developers.",
+      "price": 29.99,
+      "thumbnail": "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&auto=format&fit=crop&q=80",
+      "createdAt": "2026-11-13T11:01:16.985Z",
+      "updatedAt": "2026-11-13T11:01:16.985Z"
+    }
+  ],
+  "lectures": [
+    {
+      "_id": "47c6a94b9dab0eaae0b98262",
+      "courseId": "8f5bb8b2df4516bcd046b46d",
+      "title": "Introduction to MERN Architecture",
+      "description": "A complete high-level overview of the MERN stack, client-server communication, JSON data flow, and setting up the development environment.",
+      "videoUrl": "https://www.youtube.com/watch?v=7CqJlxBYj-M",
+      "order": 1,
+      "createdAt": "2026-11-13T11:01:16.959Z",
+      "updatedAt": "2026-11-13T11:01:16.959Z"
+    },
+    {
+      "_id": "8c9d2ce425368e7f1615236c",
+      "courseId": "8f5bb8b2df4516bcd046b46d",
+      "title": "Building RESTful APIs with Express & Mongoose",
+      "description": "Design modular MVC controllers, configure Mongoose schemas and relationships, and structure reusable route handlers.",
+      "videoUrl": "https://www.youtube.com/watch?v=-0exw-9YJCE",
+      "order": 2,
+      "createdAt": "2026-11-13T11:01:16.961Z",
+      "updatedAt": "2026-11-13T11:01:16.961Z"
+    },
+    {
+      "_id": "94e0659aba88ec76100e254c",
+      "courseId": "8f5bb8b2df4516bcd046b46d",
+      "title": "Authentication & JWT Security",
+      "description": "Secure your backend using JSON Web Tokens (JWT), password hashing with bcrypt, and protect administrative endpoints.",
+      "videoUrl": "https://www.youtube.com/watch?v=mbsmsi7l3r4",
+      "order": 3,
+      "createdAt": "2026-11-13T11:01:16.963Z",
+      "updatedAt": "2026-11-13T11:01:16.963Z"
+    },
+    {
+      "_id": "2c97e6b0adb7c188e2696f27",
+      "courseId": "8f5bb8b2df4516bcd046b46d",
+      "title": "Connecting React Frontend to Backend",
+      "description": "Connecting the client to the server, handling asynchronous API requests, loading states, and error handling.",
+      "videoUrl": "https://www.youtube.com/watch?v=fnpmR6Q5lEc",
+      "order": 4,
+      "createdAt": "2026-11-13T11:01:16.965Z",
+      "updatedAt": "2026-11-13T11:01:16.965Z"
+    },
+    {
+      "_id": "c576852d291a4ffeb59fa87c",
+      "courseId": "dd82007d1091c61c7bad9542",
+      "title": "Next.js App Router Core Fundamentals",
+      "description": "Understanding the directory layout conventions, dynamic routes, layout nesting, and page rendering in Next.js.",
+      "videoUrl": "https://www.youtube.com/watch?v=wm5gMKuwSYk",
+      "order": 1,
+      "createdAt": "2026-11-13T11:01:16.969Z",
+      "updatedAt": "2026-11-13T11:01:16.969Z"
+    },
+    {
+      "_id": "8fa321409fc877106e8be136",
+      "courseId": "dd82007d1091c61c7bad9542",
+      "title": "Server Components vs Client Components",
+      "description": "Deep dive into React Server Components, hydration boundaries, and optimizing client-side bundle size.",
+      "videoUrl": "https://www.youtube.com/watch?v=843nec-IvW0",
+      "order": 2,
+      "createdAt": "2026-11-13T11:01:16.972Z",
+      "updatedAt": "2026-11-13T11:01:16.972Z"
+    },
+    {
+      "_id": "b09597a9e3675065a08ab589",
+      "courseId": "dd82007d1091c61c7bad9542",
+      "title": "Styling with Tailwind CSS 4",
+      "description": "Modern CSS utility workflow with Tailwind CSS, custom design tokens, dark mode, and responsive layouts.",
+      "videoUrl": "https://www.youtube.com/watch?v=pFa938WBljo",
+      "order": 3,
+      "createdAt": "2026-11-13T11:01:16.975Z",
+      "updatedAt": "2026-11-13T11:01:16.975Z"
+    },
+    {
+      "_id": "da09405256959a7541144121",
+      "courseId": "687f04a12196cc60c3cbff28",
+      "title": "Python Fundamentals for Data Science",
+      "description": "Core Python syntax, list comprehensions, data structures, and essential standard libraries.",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "order": 1,
+      "createdAt": "2026-11-13T11:01:16.979Z",
+      "updatedAt": "2026-11-13T11:01:16.979Z"
+    },
+    {
+      "_id": "64299ccea0e3b48947151108",
+      "courseId": "687f04a12196cc60c3cbff28",
+      "title": "Data Analysis with Pandas and NumPy",
+      "description": "Reading CSV and JSON datasets, dataframe transformations, filtering, aggregations, and cleaning missing data.",
+      "videoUrl": "https://www.youtube.com/watch?v=vmEHCJofslg",
+      "order": 2,
+      "createdAt": "2026-11-13T11:01:16.981Z",
+      "updatedAt": "2026-11-13T11:01:16.981Z"
+    },
+    {
+      "_id": "c78d00d9a24bd5393430f5ff",
+      "courseId": "687f04a12196cc60c3cbff28",
+      "title": "Building Your First Machine Learning Model",
+      "description": "Training, evaluating, and predicting using supervised regression and classification models with scikit-learn.",
+      "videoUrl": "https://www.youtube.com/watch?v=7eh4d6sabA0",
+      "order": 3,
+      "createdAt": "2026-11-13T11:01:16.983Z",
+      "updatedAt": "2026-11-13T11:01:16.983Z"
+    },
+    {
+      "_id": "1923ba5ad1be793789dfb25a",
+      "courseId": "b1c49c5e5ce55a8218afe293",
+      "title": "Design Principles & Visual Hierarchy",
+      "description": "Typography scale, contrast ratios, whitespace, visual hierarchy, and creating accessible color palettes.",
+      "videoUrl": "https://www.youtube.com/watch?v=c9Wg6Cb_YlU",
+      "order": 1,
+      "createdAt": "2026-11-13T11:01:16.987Z",
+      "updatedAt": "2026-11-13T11:01:16.987Z"
+    },
+    {
+      "_id": "23f3b60d1beaab00c095f68e",
+      "courseId": "b1c49c5e5ce55a8218afe293",
+      "title": "Mastering Auto-Layout & Component Variants",
+      "description": "Building responsive components in Figma that stretch, wrap, and behave like real web elements.",
+      "videoUrl": "https://www.youtube.com/watch?v=Nk_XwP6e51E",
+      "order": 2,
+      "createdAt": "2026-11-13T11:01:16.990Z",
+      "updatedAt": "2026-11-13T11:01:16.990Z"
+    }
+  ]
+}
