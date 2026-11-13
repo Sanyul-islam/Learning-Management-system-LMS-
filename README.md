@@ -129,7 +129,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 |---|---|---|---|
 | `GET` | `/api/health` | Public | System status and database mode check |
 | `POST` | `/api/auth/login` | Public | Admin login (returns JWT token) |
+| `POST` | `/api/auth/create-admin` | Public / Script | **Create a new admin account (Backend API only)** |
 | `GET` | `/api/auth/me` | Admin | Get authenticated admin profile |
+| `GET` | `/api/auth/admins` | Admin | Get list of all registered admins |
 | `GET` | `/api/courses` | Public | List all courses (supports `?search=...`) |
 | `GET` | `/api/courses/:id` | Public | Get course details with all lectures |
 | `POST` | `/api/courses` | Admin | Create a new course |
@@ -138,5 +140,21 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `GET` | `/api/courses/:courseId/lectures` | Public | List lectures for a course |
 | `POST` | `/api/courses/:courseId/lectures` | Admin | Add a lecture to a course |
 | `GET` | `/api/lectures/:id` | Public | Get single lecture |
+| `PUT` | `/api/lectures/:id` | Admin | Update a lecture |
+| `DELETE` | `/api/lectures/:id` | Admin | Delete a lecture |
+
+### 🔒 Creating a New Admin via API
+
+To register an admin without frontend exposure, send a `POST` request to `/api/auth/create-admin`:
+
+```bash
+curl -X POST http://localhost:5000/api/auth/create-admin \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Co-Instructor",
+    "email": "instructor@lms.com",
+    "password": "instructorpassword123"
+  }'
+```
 | `PUT` | `/api/lectures/:id` | Admin | Update a lecture |
 | `DELETE` | `/api/lectures/:id` | Admin | Delete a lecture |

@@ -79,6 +79,19 @@ const dataService = {
       }
     },
 
+    findAll: async () => {
+      const { isMongo } = getDBStatus();
+      if (isMongo) {
+        return await Admin.find({}).select('-password').sort({ createdAt: -1 });
+      } else {
+        const store = readStore();
+        return store.admins.map((a) => {
+          const { password, ...rest } = a;
+          return rest;
+        });
+      }
+    },
+
     deleteAll: async () => {
       const { isMongo } = getDBStatus();
       if (isMongo) {
