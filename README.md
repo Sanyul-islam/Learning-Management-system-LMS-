@@ -183,21 +183,53 @@ curl -X POST http://localhost:5000/api/auth/create-admin \
 
 ## ☁️ Deployment on Vercel
 
-The project includes pre-configured `vercel.json` files for both frontend and backend deployments:
+The project includes pre-configured `vercel.json` files for both frontend and backend.
 
-### 1. Frontend Deployment (Root [`vercel.json`](./vercel.json))
-- **Root Directory**: `.` (Root)
+### How It Works (Architecture)
+
+The frontend Next.js app includes a **catch-all API proxy route** at `src/app/api/[...path]/route.ts`. Every `/api/*` request from the browser is forwarded server-side to the Express backend. This means:
+
+- **No CORS issues** — the browser only ever talks to the same origin.
+- **No hardcoded localhost URLs** — works on Vercel, local dev, or any host.
+- **`BACKEND_URL`** env var on the **frontend** project controls where the proxy sends requests.
+
+### Step-by-Step Vercel Deployment
+
+**Step 1 — Deploy the Backend (Express API)**
+
+1. Go to [vercel.com](https://vercel.com) → **Add New Project** → Import the same repo.
+2. Set **Root Directory** to `server`.
+3. Under **Environment Variables**, add:
+   | Variable | Value |
+   |---|---|
+   | `MONGODB_URI` | Your MongoDB Atlas URI (e.g. `mongodb+srv://user:pass@cluster.mongodb.net/lms`) |
+   | `JWT_SECRET` | `lms_super_secret_jwt_key_2026_eval` |
+   | `ADMIN_EMAIL` | `admin@lms.com` |
+   | `ADMIN_PASSWORD` | `adminpassword123` |
+   | `CLIENT_URL` | `https://learning-management-system-lms-steel.vercel.app` |
+4. Click **Deploy**. Note the backend URL (e.g. `https://lms-backend-xxxx.vercel.app`).
+
+**Step 2 — Configure the Frontend**
+
+1. Go to your existing frontend Vercel project → **Settings → Environment Variables**.
+2. Add:
+   | Variable | Value |
+   |---|---|
+   | `BACKEND_URL` | `https://lms-backend-xxxx.vercel.app` *(your backend URL, no trailing slash)* |
+3. Click **Save** then **Redeploy** the frontend.
+
+**Step 3 — Verify**
+
+- Visit `https://learning-management-system-lms-steel.vercel.app/api/health`
+- You should see a JSON response like `{ "status": "ok", "database": { ... } }`
+
+### 1. Frontend Project ([`vercel.json`](./vercel.json))
+- **Root Directory**: `.` (project root)
 - **Framework**: Next.js
 - **Build Command**: `npm run build`
-- **Environment Variables**:
-  - `NEXT_PUBLIC_API_URL`: Your deployed backend URL (e.g. `https://your-api.vercel.app/api` or `https://your-api.onrender.com/api`).
-  - `BACKEND_URL`: (Optional) Next.js reverse-proxy destination if you wish to proxy `/api/*` through Next.js.
+- **Runtime env var**: `BACKEND_URL` — where the server-side proxy forwards `/api/*` calls.
 
-### 2. Backend Deployment ([`server/vercel.json`](./server/vercel.json))
+### 2. Backend Project ([`server/vercel.json`](./server/vercel.json))
 - **Root Directory**: `server`
-- **Builds**: `@vercel/node` targeting `src/index.js`
-- **Environment Variables**:
-  - `MONGODB_URI`: Your MongoDB Atlas connection string.
-  - `JWT_SECRET`: Secret key for JWT token signing.
-  - `CLIENT_URL`: Your deployed frontend URL (e.g. `https://your-lms.vercel.app`).
-- The Express app is serverless-ready and automatically skips port binding when `process.env.VERCEL` is detected.
+- **Runtime**: `@vercel/node` targeting `src/index.js`
+- The Express app skips `app.listen()` automatically when `process.env.VERCEL` is set.
