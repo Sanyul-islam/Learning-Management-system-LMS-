@@ -1,7 +1,13 @@
 // API Client for LMS
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// In the browser, use relative path so it works on any domain (Vercel, local, etc.)
+// On the server side (SSR), fall back to localhost for local dev or use NEXT_PUBLIC_API_URL if set
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (typeof window !== 'undefined') return '/api'; // browser → same-origin /api route
+  return 'http://localhost:5000/api'; // SSR fallback for local dev
+};
+const API_BASE_URL = getApiBaseUrl();
 
 export interface Course {
   _id: string;
@@ -108,9 +114,11 @@ async function request<T>(
     return data;
   } catch (err: any) {
     if (err.name === 'TypeError' && err.message.includes('fetch')) {
-      throw new Error(
-        `Unable to reach backend server at ${API_BASE_URL}. Ensure the backend is running on port 5000.`
-      );
+      const hint =
+        typeof window !== 'undefined'
+          ? 'The API proxy could not reach the backend service. Check BACKEND_URL is set in Vercel environment variables.'
+          : 'Ensure the backend server is running on port 5000.';
+      throw new Error(`Unable to reach backend server. ${hint}`);
     }
     throw err;
   }
